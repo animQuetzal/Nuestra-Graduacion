@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación de Graduación</title>
     <style>
-        body {
+        /* Reseteo global para eliminar bordes blancos del navegador */
+        html, body {
             margin: 0;
             padding: 0;
             background-color: #FFFFFF;
@@ -14,16 +15,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
 
-        /* LIENZO VIRTUAL DEL CELULAR */
+        /* CONTENEDOR DEL CELULAR */
         .canvas-celular {
             max-width: 450px;
             width: 100%;
             position: relative;
             box-sizing: border-box;
-            background-color: #FFFFFF; /* Cambia a tu imagen de fondo cuando la tengas lista */
-            padding: 20px;
+            background-color: #FFFFFF;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -31,22 +32,36 @@
             min-height: 100vh;
         }
 
-        h1 {
-            color: #D4AF37; /* Letras Doradas */
-            font-size: 2.3rem;
-            margin-top: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* SECCIÓN HERO: VIDEO A ANCHO COMPLETO */
+        .contenedor-hero-video {
+            width: 100%;
+            position: relative;
+            line-height: 0; /* Elimina espacios residuales debajo del video */
         }
 
-        /* CONTENEDOR PARA TU VIDEO DE MOHO */
         .video-portada {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Texto opcional flotando sobre el video (Capa Superior) */
+        .frase-video {
+            position: absolute;
+            bottom: 20px;
+            left: 5%;
             width: 90%;
-            max-width: 350px;
-            border-radius: 15px; /* Bordes suaves para tu animación */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin: 15px 0;
-            z-index: 2;
+            margin: 0;
+            line-height: 1.4;
+            color: #FFFFFF;
+            font-size: 1rem;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            z-index: 5;
+            box-sizing: border-box;
+            /* NOTA: Si pusiste la frase dentro del video en Moho, 
+               puedes borrar este bloque o ponerle 'display: none;' */
+            display: block; 
         }
 
         /* CONTENEDOR DEL RELOJ REGRESIVO */
@@ -56,10 +71,11 @@
             padding: 15px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            margin: 20px 0;
+            margin: 25px 0 15px 0;
             display: flex;
             justify-content: space-around;
             z-index: 3;
+            box-sizing: border-box;
         }
 
         .time-box {
@@ -78,28 +94,40 @@
             text-transform: uppercase;
         }
 
+        /* INFORMACIÓN DEL EVENTO */
         .info-evento {
             background: rgba(245, 245, 245, 0.9);
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            margin-top: 10px;
+            margin: 10px 0;
             font-size: 1rem;
-            width: 85%;
+            width: 90%;
+            box-sizing: border-box;
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
+        .school-title {
+            color: #D4AF37;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        /* BOTONES INTERACTIVOS */
         .btn {
             display: block;
             background-color: #D4AF37;
             color: #FFFFFF;
             text-decoration: none;
             padding: 15px;
-            margin: 12px 0;
+            margin: 10px 0;
             border-radius: 25px;
             font-weight: bold;
             text-transform: uppercase;
-            width: 85%;
+            width: 90%;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
         }
 
         .btn-whatsapp {
@@ -111,12 +139,15 @@
 
     <div class="canvas-celular">
         
-        <h1>Ceremonia de<br>Graduación</h1>
-        
-        <video class="video-portada" autoplay loop muted playsinline>
-            <source src="portada.mp4" type="video/mp4">
-            Tu navegador no soporta videos.
-        </video>
+        <div class="contenedor-hero-video">
+            <video class="video-portada" autoplay loop muted playsinline>
+                <source src="portada.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+            <p class="frase-video">
+                "La generación que dejó huella en cada uno de sus alumnos se despide como mejor sabe hacerlo: con risas, recuerdos y una alegría inmensa"
+            </p>
+        </div>
 
         <div id="countdown" class="contenedor-reloj">
             <div class="time-box"><span id="days">00</span><label>Días</label></div>
@@ -126,8 +157,9 @@
         </div>
 
         <div class="info-evento">
-            <p><strong>Escuela Telesecundaria Elvira Cabañez</strong><br>Generación 2023 - 2026</p>
-            <p>Viernes 26 de Junio de 2026<br>Horario: 09:00 A.M.</p>
+            <div class="school-title">Escuela Telesecundaria Elvira Cabañez</div>
+            <p>Generación 2023 - 2026</p>
+            <p><strong>Viernes 26 de Junio de 2026</strong><br>Horario: 09:00 A.M.</p>
         </div>
 
         <a href="https://wa.me/1234567890?text=Hola!%20Confirmo%20mi%20asistencia%20a%20la%20graduación." target="_blank" class="btn btn-whatsapp">
@@ -141,7 +173,6 @@
     </div>
 
     <script>
-        // Reloj programado al viernes 26 de junio de 2026 a las 9:00 AM
         const targetDate = new Date("June 26, 2026 09:00:00").getTime();
         const updateCountdown = setInterval(() => {
             const now = new Date().getTime();
